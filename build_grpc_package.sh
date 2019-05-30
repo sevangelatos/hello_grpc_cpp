@@ -30,9 +30,10 @@ rm -rf third_party/cares/cares
 
 # Make and install protobuf package
 cd third_party/protobuf
+sudo rm /usr/local/bin/protoc
 mkdir -p cmake/build
 cd cmake/build
-cmake -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
+cmake -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1 ..
 make -j4
 sudo checkinstall \
     --type debian \
@@ -41,9 +42,7 @@ sudo checkinstall \
     --arch amd64 \
     --maintainer "sevangelatos@gmail.com" \
     --requires "zlib1g-dev" \
-    --nodoc \
-    --exclude . \
-    --default   # Accept default answers for the rest
+    --nodoc 
 mv *.deb "${INVOKED_DIR}"
 cd ../../../..
 rm -rf third_party/protobuf 
@@ -65,9 +64,7 @@ sudo checkinstall \
     --arch amd64 \
     --maintainer "sevangelatos@gmail.com" \
     --requires "libssl-dev,protobuf-mrx,libc-ares-dev,zlib1g-dev" \
-    --nodoc \
-    --exclude . \
-    --default   # Accept default answers for the rest
+    --nodoc 
 mv *.deb "${INVOKED_DIR}"
 cd ../..
 
